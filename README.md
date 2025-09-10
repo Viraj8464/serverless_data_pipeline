@@ -1,1 +1,0 @@
-# serverless_data_pipeline
