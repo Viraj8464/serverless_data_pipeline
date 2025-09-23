@@ -14,7 +14,7 @@ provider "aws" {
 
 module "s3_bucket" {
   source = "./modules/s3"
-  bucket_name = "upload-bucket-data-pipeline-234"
+  bucket_name = "myfirstbucket-8464"
 }
 
 module "dynamodb_table" {
