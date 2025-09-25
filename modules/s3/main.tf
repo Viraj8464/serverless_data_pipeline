@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "this" {
-  bucket = var.bucket_name
+  bucket = myfirstbucket-8464
 
   force_destroy = true
 }
