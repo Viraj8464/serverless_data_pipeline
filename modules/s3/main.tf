@@ -5,7 +5,7 @@ resource "random_id" "suffix" {
 
 # Create S3 bucket with unique name
 resource "aws_s3_bucket" "this" {
-  bucket        = "myfirstbucket-8464"
+  bucket        = "upload-bucket-data-pipeline-${random_id.suffix.hex}"
   force_destroy = true
 }
 
