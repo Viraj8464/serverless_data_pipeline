@@ -1,8 +1,12 @@
-# Create S3 bucket with fixed name
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
 resource "aws_s3_bucket" "this" {
-  bucket        = "myfirstbucket-8464"  # your fixed bucket name
+  bucket        = "myfirstbucket-8464-${random_id.suffix.hex}"
   force_destroy = true
 }
+
 
 # Upload a sample object into the bucket
 resource "aws_s3_object" "sample_data" {
