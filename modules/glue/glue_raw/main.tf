@@ -8,7 +8,7 @@ resource "aws_glue_catalog_table" "this" {
   table_type    = "EXTERNAL_TABLE"
 
   storage_descriptor {
-    location      = var.s3_location
+    location = "s3://${var.bucket_name}/data/"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
     ser_de_info {
