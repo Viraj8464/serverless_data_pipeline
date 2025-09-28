@@ -1,5 +1,5 @@
 variable "bucket_name" {
-  description = "my-new-unique-bucket-viraj"
+  description = "upload-bucket-data-pipeline-8464"
   type        = string
 }
 
