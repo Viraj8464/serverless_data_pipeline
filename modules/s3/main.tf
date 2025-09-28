@@ -1,18 +1,17 @@
+# Get your AWS account ID
+data "aws_caller_identity" "current" {}
+
+# Generate a random suffix (8 hex chars)
 resource "random_id" "suffix" {
   byte_length = 4
 }
 
+# Create S3 bucket with guaranteed unique name
 resource "aws_s3_bucket" "this" {
-  bucket        = "myfirstbucket-8464-viraj-${random_id.suffix.hex}"
-  force_destroy = true
+  bucket = "upload-bucket-data-pipeline-${data.aws_caller_identity.current.account_id}-${random_id.suffix.hex}"
+
+  tags = {
+    Name        = "upload-bucket-data-pipeline"
+    Environment = "dev"
+  }
 }
-
-
-# Upload a sample object into the bucket
-resource "aws_s3_object" "sample_data" {
-  bucket       = aws_s3_bucket.this.id
-  key          = "data/sample.json"
-  source       = "${path.module}/sample.json"
-  content_type = "application/json"
-}
-
