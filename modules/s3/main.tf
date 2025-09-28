@@ -1,12 +1,9 @@
-# Get your AWS account ID
 data "aws_caller_identity" "current" {}
 
-# Generate a random suffix (8 hex chars)
 resource "random_id" "suffix" {
   byte_length = 4
 }
 
-# Create S3 bucket with guaranteed unique name
 resource "aws_s3_bucket" "this" {
   bucket = "upload-bucket-data-pipeline-${data.aws_caller_identity.current.account_id}-${random_id.suffix.hex}"
 
@@ -15,3 +12,4 @@ resource "aws_s3_bucket" "this" {
     Environment = "dev"
   }
 }
+
