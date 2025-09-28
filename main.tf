@@ -14,7 +14,7 @@ provider "aws" {
 
 module "s3_bucket" {
   source = "./modules/s3"
-  bucket_name = "myfirstbucket-8464"
+  bucket_name = "myfirstbucket-8464-viraj"
 }
 
 module "dynamodb_table" {
