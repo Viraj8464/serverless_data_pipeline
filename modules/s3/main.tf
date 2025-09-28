@@ -3,7 +3,7 @@ resource "random_id" "bucket_suffix" {
 }
 
 resource "aws_s3_bucket" "this" {
-  bucket        = "upload-bucket-data-pipeline-${random_id.bucket_suffix.hex}"
+  bucket        = "upload-bucket-data-pipeline-8464-${random_id.bucket_suffix.hex}"
   force_destroy = true
 
   tags = {
