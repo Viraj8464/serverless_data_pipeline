@@ -14,7 +14,7 @@ provider "aws" {
 
 module "s3_bucket" {
   source = "./modules/s3"
-  bucket_name = "my-new-unique-bucket-viraj"
+  bucket_name = "upload-bucket-data-pipeline-8464"
 }
 
 module "dynamodb_table" {
