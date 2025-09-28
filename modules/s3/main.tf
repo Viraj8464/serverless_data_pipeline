@@ -3,7 +3,7 @@ resource "random_id" "suffix" {
 }
 
 resource "aws_s3_bucket" "this" {
-  bucket        = "myfirstbucket-8464-${random_id.suffix.hex}"
+  bucket        = "myfirstbucket-8464-viraj-${random_id.suffix.hex}"
   force_destroy = true
 }
 
