@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "serverless-data-pipeline-backend-bucket"
+    bucket = "upload-bucket-data-pipeline-8464"
     key    = "serverless-pipeline/dev/terraform.tfstate"
-    region = "us-east-1"
+    region = "eu-north-1"
   }
 }
