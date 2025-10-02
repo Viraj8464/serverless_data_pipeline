@@ -2,15 +2,11 @@
 
 # Lambda function module
 module "lambda_function" {
-  source = "./modules/lambda"
-
-  # 👇 pass required inputs for your Lambda here
+  source        = "./modules/lambda"
   function_name = "my-lambda-fn"
   handler       = "index.handler"
   runtime       = "python3.12"
   role_arn      = "arn:aws:iam::123456789012:role/my-lambda-role"
-
-  # Example: if using deployment package
   filename      = "lambda_function_payload.zip"
 }
 
@@ -21,6 +17,7 @@ module "s3_bucket" {
   lambda_function_arn  = module.lambda_function.arn
   lambda_function_name = module.lambda_function.function_name
 }
+
 
 # DynamoDB table module
 module "dynamodb_table" {
