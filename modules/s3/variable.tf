@@ -1,4 +1,5 @@
-variable "bucket_name" {
+variable "lambda_function_arn" {
   type        = string
-  description = "The name of the S3 bucket"
+  description = "ARN of the Lambda function"
+  default     = null
 }
