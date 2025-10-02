@@ -1,7 +1,9 @@
-terraform {
-  backend "s3" {
-    bucket = "upload-bucket-data-pipeline-8464"  # <- new bucket
-    key    = "terraform.tfstate"
-    region = "eu-north-1"
+resource "aws_s3_bucket" "this" {
+  bucket = var.bucket_name
+  acl    = "private"
+
+  tags = {
+    Name        = var.bucket_name
+    Environment = "Dev"
   }
 }
