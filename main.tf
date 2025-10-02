@@ -1,6 +1,5 @@
 # Root main.tf
 
-# Lambda function module
 module "lambda_function" {
   source        = "./modules/lambda"
   function_name = "my-lambda-fn"
@@ -10,7 +9,6 @@ module "lambda_function" {
   filename      = "lambda_function_payload.zip"
 }
 
-# S3 bucket module
 module "s3_bucket" {
   source               = "./modules/s3"
   bucket_name          = "upload-bucket-data-pipeline-8464"
