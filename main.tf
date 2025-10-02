@@ -1,5 +1,19 @@
 # Root main.tf
 
+# Lambda function module
+module "lambda_function" {
+  source = "./modules/lambda"
+
+  # 👇 pass required inputs for your Lambda here
+  function_name = "my-lambda-fn"
+  handler       = "index.handler"
+  runtime       = "python3.12"
+  role_arn      = "arn:aws:iam::123456789012:role/my-lambda-role"
+
+  # Example: if using deployment package
+  filename      = "lambda_function_payload.zip"
+}
+
 # S3 bucket module
 module "s3_bucket" {
   source               = "./modules/s3"
@@ -33,16 +47,3 @@ module "databrew" {
   source = "./modules/databrew"
 }
 
-# Lambda function module
-module "lambda_function" {
-  source = "./modules/lambda"
-
-  # 👇 pass required inputs for your Lambda here
-  function_name = "my-lambda-fn"
-  handler       = "index.handler"
-  runtime       = "python3.12"
-  role_arn      = "arn:aws:iam::123456789012:role/my-lambda-role"
-
-  # Example: if using deployment package
-  filename      = "lambda_function_payload.zip"
-}
