@@ -1,5 +1,14 @@
+resource "aws_s3_bucket" "this" {
+  bucket = var.bucket_name
+  acl    = "private"
+
+  tags = {
+    Name        = var.bucket_name
+    Environment = "Dev"
+  }
+}
+
 resource "aws_s3_bucket_notification" "lambda_trigger" {
-  count  = var.lambda_function_arn == null ? 0 : 1
   bucket = aws_s3_bucket.this.id
 
   lambda_function {
