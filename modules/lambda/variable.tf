@@ -1,5 +1,19 @@
-variable "table_name" {}
-variable "dynamodb_stream_arn" {}
-variable "lambda_name" {}
-variable handler_trigger {}
-variable "s3_bucket" {}
+variable "function_name" {
+  type = string
+}
+
+variable "handler" {
+  type = string
+}
+
+variable "runtime" {
+  type = string
+}
+
+variable "role_arn" {
+  type = string
+}
+
+variable "filename" {
+  type = string
+}
