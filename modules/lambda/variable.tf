@@ -1,19 +1,5 @@
-variable "function_name" {
-  type = string
-}
-
-variable "handler" {
-  type = string
-}
-
-variable "runtime" {
-  type = string
-}
-
-variable "role_arn" {
-  type = string
-}
-
-variable "filename" {
-  type = string
-}
+variable "function_name" {}
+variable "handler" {}
+variable "runtime" {}
+variable "role_arn" {}
+variable "filename" {}
