@@ -1,4 +1,4 @@
-output "data_zip" {
-  description = "Lambda Functions"
-  value = data.archive_file.src_zip
+output "arn" {
+  description = "The ARN of the Lambda function"
+  value       = aws_lambda_function.this.arn
 }
