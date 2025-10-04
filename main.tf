@@ -14,6 +14,7 @@ module "s3_bucket" {
   bucket_name          = "upload-bucket-data-pipeline-8464"
   lambda_function_arn  = module.lambda_function.arn
   lambda_function_name = module.lambda_function.function_name
+  environment          = "Dev"
 }
 
 
