@@ -2,16 +2,16 @@
 
 module "lambda_function" {
   source        = "./modules/lambda"
-  function_name = "my-lambda-fn"
+  function_name = "mylambdafunction"                 # ✅ your actual Lambda name
   handler       = "index.handler"
   runtime       = "python3.12"
-  role_arn      = "arn:aws:iam::123456789012:role/my-lambda-role"
+  role_arn      = "arn:aws:iam::055526794060:role/myrole"   # ✅ your actual IAM role
   filename      = "lambda_function_payload.zip"
 }
 
 module "s3_bucket" {
   source               = "./modules/s3"
-  bucket_name          = "upload-bucket-data-pipeline-8464"
+  bucket_name          = "upload-bucket-data-pipeline-8464"   # ✅ your actual S3 bucket
   lambda_function_arn  = module.lambda_function.lambda_function_arn
   lambda_function_name = module.lambda_function.function_name
 }
