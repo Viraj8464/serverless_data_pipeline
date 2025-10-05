@@ -1,6 +1,6 @@
 # ===== Root main.tf =====
 
-module "lambda_function" {
+module "lambda" {
   source        = "./modules/lambda"
   function_name = "mylambdafunction"
   handler       = "index.handler"
