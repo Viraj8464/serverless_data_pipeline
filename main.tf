@@ -1,9 +1,9 @@
 # ===== Root main.tf =====
 
-module "lambda" {
+module "lambda_function" {
   source        = "./modules/lambda"
   function_name = "mylambdafunction"
-  handler       = "index.handler"
+  handler       = "databrew_trigger.lambda_handler"  # <filename>.<function>
   runtime       = "python3.12"
   role_arn      = "arn:aws:iam::055526794060:role/myrole"
   filename      = "lambda_function_payload.zip"
