@@ -1,20 +1,21 @@
-# Root main.tf
+# ===== Root main.tf =====
 
 module "lambda_function" {
   source        = "./modules/lambda"
-  function_name = "mylambdafunction"                 # ✅ your actual Lambda name
+  function_name = "mylambdafunction"
   handler       = "index.handler"
   runtime       = "python3.12"
-  role_arn      = "arn:aws:iam::055526794060:role/myrole"   # ✅ your actual IAM role
+  role_arn      = "arn:aws:iam::055526794060:role/myrole"
   filename      = "lambda_function_payload.zip"
 }
 
 module "s3_bucket" {
   source               = "./modules/s3"
-  bucket_name          = "upload-bucket-data-pipeline-8464"   # ✅ your actual S3 bucket
+  bucket_name          = "upload-bucket-data-pipeline-8464"
   lambda_function_arn  = module.lambda_function.lambda_function_arn
   lambda_function_name = module.lambda_function.function_name
 }
+
 
 
 # DynamoDB table module
