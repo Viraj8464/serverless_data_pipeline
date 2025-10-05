@@ -1,21 +1,8 @@
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
-  acl    = "private"
-
-  tags = {
-    Name        = var.bucket_name
-    Environment = "Dev"
-  }
 }
 
-resource "aws_lambda_permission" "allow_s3" {
-  statement_id  = "AllowExecutionFromS3"
-  action        = "lambda:InvokeFunction"
-  function_name = var.lambda_function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.this.arn
-}
-
+# Optional: Add Lambda trigger on S3 object create
 resource "aws_s3_bucket_notification" "lambda_trigger" {
   bucket = aws_s3_bucket.this.id
 
@@ -24,5 +11,14 @@ resource "aws_s3_bucket_notification" "lambda_trigger" {
     events              = ["s3:ObjectCreated:*"]
   }
 
-  depends_on = [aws_lambda_permission.allow_s3]
+  depends_on = [aws_s3_bucket.this]
+}
+
+# Allow S3 to invoke Lambda
+resource "aws_lambda_permission" "allow_s3_invoke" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = var.lambda_function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = aws_s3_bucket.this.arn
 }
