@@ -1,45 +1,64 @@
-# ===== Root main.tf =====
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    awscc = {
+      source  = "hashicorp/awscc"
+      version = ">= 1.0.0"
+    }
+  }
 
+  backend "s3" {
+    bucket = "myfirstbucket-8464"
+    key    = "terraform/state/serverless_data_pipeline.tfstate"
+    region = "us-east-1"
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Lambda module
 module "lambda_function" {
-  source        = "./modules/lambda"
+  source = "./modules/lambda"
   function_name = "mylambdafunction"
-  handler       = "databrew_trigger.lambda_handler"  # <filename>.<function>
-  runtime       = "python3.12"
-  role_arn      = "arn:aws:iam::055526794060:role/myrole"
-  filename      = "lambda_function_payload.zip"
 }
 
+# S3 bucket module (depends on lambda)
 module "s3_bucket" {
-  source               = "./modules/s3"
-  bucket_name          = "upload-bucket-data-pipeline-8464"
-  lambda_function_arn  = module.lambda_function.lambda_function_arn
-  lambda_function_name = module.lambda_function.function_name
+  source              = "./modules/s3"
+  bucket_name         = "upload-bucket-data-pipeline-8464"
+  lambda_function_arn = module.lambda_function.lambda_function_arn
 }
 
+# Glue Raw Catalog
+module "glue_catalog" {
+  source      = "./modules/glue/glue_raw"
+  bucket_name = module.s3_bucket.s3_bucket_name
+}
 
+# Glue Cleaned Catalog
+module "glue_catalog_cleaned" {
+  source      = "./modules/glue/glue_cleaned"
+  bucket_name = module.s3_bucket.s3_bucket_name
+}
 
-# DynamoDB table module
+# Athena
+module "athena" {
+  source      = "./modules/athena"
+  bucket_name = module.s3_bucket.s3_bucket_name
+}
+
+# DataBrew
+module "databrew" {
+  source      = "./modules/databrew"
+  bucket_name = module.s3_bucket.s3_bucket_name
+}
+
+# DynamoDB
 module "dynamodb_table" {
   source = "./modules/dynamodb"
 }
-
-# Athena module
-module "athena" {
-  source = "./modules/athena"
-}
-
-# Glue raw catalog
-module "glue_catalog" {
-  source = "./modules/glue/glue_raw"
-}
-
-# Glue cleaned catalog
-module "glue_catalog_cleaned" {
-  source = "./modules/glue/glue_cleaned"
-}
-
-# Databrew
-module "databrew" {
-  source = "./modules/databrew"
-}
-
