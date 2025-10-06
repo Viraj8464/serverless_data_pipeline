@@ -1,21 +1,9 @@
 variable "bucket_name" {
+  description = "Name of the S3 bucket to create"
   type        = string
-  description = "Name of the S3 bucket"
 }
 
 variable "lambda_function_arn" {
-  description = "Lambda function ARN (optional for now)"
+  description = "Lambda function ARN for S3 trigger"
   type        = string
-  default     = null
-}
-
-variable "lambda_function_name" {
-  type        = string
-  description = "Name of the Lambda function to trigger"
-}
-
-variable "environment" {
-  type        = string
-  description = "Environment tag for the S3 bucket"
-  default     = "Dev"
 }
