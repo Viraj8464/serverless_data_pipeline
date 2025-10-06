@@ -4,8 +4,9 @@ variable "bucket_name" {
 }
 
 variable "lambda_function_arn" {
-  description = "Lambda function ARN"
+  description = "Lambda function ARN (optional for now)"
   type        = string
+  default     = null
 }
 
 variable "lambda_function_name" {
