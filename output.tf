@@ -3,12 +3,18 @@ output "lambda_function_arn" {
   value       = module.lambda_function.lambda_function_arn
 }
 
-output "lambda_function_name" {
-  description = "Lambda function name from module"
-  value       = module.lambda_function.function_name
+output "s3_bucket_name" {
+  value = module.s3_bucket.bucket_name
 }
 
-output "s3_bucket_name" {
-  description = "S3 bucket name from module"
-  value       = module.s3_bucket.bucket_name
+output "lambda_function_name" {
+  value = module.lambda.lambda_name
+}
+
+output "glue_database" {
+  value = module.glue.database_name
+}
+
+output "athena_workgroup" {
+  value = module.athena.workgroup_name
 }
