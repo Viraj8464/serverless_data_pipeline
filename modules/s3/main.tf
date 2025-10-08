@@ -2,18 +2,25 @@ resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
 }
 
-resource "aws_s3_bucket_notification" "lambda_trigger" {
-  bucket = aws_s3_bucket.this.id
-
-  lambda_function {
-    lambda_function_arn = var.lambda_function_arn
-    events              = ["s3:ObjectCreated:*"]
-    filter_prefix       = "data/"
-  }
-
-  depends_on = [var.lambda_permission]
+resource "aws_s3_bucket_public_access_block" "block" {
+  bucket                  = aws_s3_bucket.this.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
-output "bucket_name" {
+resource "aws_s3_object" "sample_data" {
+  bucket = aws_s3_bucket.this.bucket
+  key    = "sample.json"
+  source = "${path.module}/sample.json"
+  etag   = filemd5("${path.module}/sample.json")
+}
+
+output "s3_bucket_name" {
   value = aws_s3_bucket.this.bucket
+}
+
+output "sample_object_url" {
+  value = "s3://${aws_s3_bucket.this.bucket}/${aws_s3_object.sample_data.key}"
 }
