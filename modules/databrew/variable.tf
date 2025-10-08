@@ -1,5 +1,2 @@
-variable "bucket_name" {
-  type        = string
-  description = "S3 bucket for DataBrew dataset"
-}
-
+variable "bucket_name" {}
+variable "iam_role_name" {}
