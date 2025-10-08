@@ -1,15 +1,17 @@
 terraform {
-  required_version = ">= 1.5.0"
-
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
   backend "s3" {
-    bucket         = "upload-bucket-data-pipeline-8464"  # your backend bucket
-    key            = "terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-lock"
-    encrypt        = true
+    bucket = "upload-bucket-data-pipeline-8464"
+    key    = "terraform/state.tfstate"
+    region = "eu-north-1"
   }
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
