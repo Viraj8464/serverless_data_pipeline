@@ -1,4 +1,3 @@
 variable "bucket_name" {
-  type        = string
-  description = "S3 bucket name for Glue data"
+  description = "S3 bucket name containing cleaned data"
 }
