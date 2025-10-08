@@ -1,3 +1,8 @@
+variable "bucket_name" {
+  description = "Name of S3 bucket"
+  type        = string
+}
+
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
 }
@@ -11,7 +16,7 @@ resource "aws_s3_bucket_public_access_block" "block" {
 }
 
 resource "aws_s3_object" "sample_data" {
-  bucket = aws_s3_bucket.this.bucket
+  bucket = aws_s3_bucket.this.id
   key    = "sample.json"
   source = "${path.module}/sample.json"
   etag   = filemd5("${path.module}/sample.json")
