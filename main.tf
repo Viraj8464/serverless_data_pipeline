@@ -50,6 +50,11 @@ module "databrew" {
   source      = "./modules/databrew"
   bucket_name = module.s3.bucket_name
 }
+module "databrew" {
+  source      = "./modules/databrew"
+  bucket_name = module.s3.bucket_name
+  role_arn    = aws_iam_role.lambda_role.arn
+}
 
 # ----------------- DynamoDB -----------------
 module "dynamodb" {
