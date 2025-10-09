@@ -6,6 +6,7 @@ provider "aws" {
 module "s3" {
   source      = "./modules/s3"
   bucket_name = var.bucket_name
+  lambda_function_arn = module.lambda.lambda_functions["databrew_trigger_arn"]
 }
 
 # ----------------- IAM Role -----------------
@@ -37,6 +38,7 @@ module "lambda" {
   function_name      = var.function_name
   role_arn           = aws_iam_role.lambda_role.arn
   bucket_name        = module.s3.bucket_name
+  bucket_arn    = module.s3.bucket_arn
 }
 
 # ----------------- Glue -----------------
