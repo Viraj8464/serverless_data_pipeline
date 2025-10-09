@@ -1,31 +1,63 @@
-module "s3_bucket" {
+provider "aws" {
+  region = "us-east-1"
+}
+
+# ----------------- S3 -----------------
+module "s3" {
   source      = "./modules/s3"
   bucket_name = var.bucket_name
 }
 
+# ----------------- IAM Role -----------------
+resource "aws_iam_role" "lambda_role" {
+  name = var.role_name
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+        Effect = "Allow"
+      }
+    ]
+  })
+}
+
+# Attach AWS basic Lambda execution policy
+resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+# ----------------- Lambda -----------------
+module "lambda" {
+  source             = "./modules/lambda"
+  function_name      = var.function_name
+  role_arn           = aws_iam_role.lambda_role.arn
+  bucket_name        = module.s3.bucket_name
+}
+
+# ----------------- Glue -----------------
+module "glue" {
+  source      = "./modules/glue"
+  bucket_name = module.s3.bucket_name
+}
+
+# ----------------- DataBrew -----------------
+module "databrew" {
+  source      = "./modules/databrew"
+  bucket_name = module.s3.bucket_name
+}
+
+# ----------------- DynamoDB -----------------
 module "dynamodb" {
   source = "./modules/dynamodb"
 }
 
-module "lambda" {
-  source                = "./modules/lambda"
-  bucket_name           = module.s3_bucket.bucket_name
-  lambda_function_name  = var.lambda_function_name
-  iam_role_name         = var.iam_role_name
-  dynamodb_stream_arn   = module.dynamodb.stream_arn
-}
-
-module "databrew" {
-  source      = "./modules/databrew"
-  bucket_name = module.s3_bucket.bucket_name
-}
-
-module "glue" {
-  source      = "./modules/glue"
-  bucket_name = module.s3_bucket.bucket_name
-}
-
+# ----------------- Athena -----------------
 module "athena" {
   source      = "./modules/athena"
-  bucket_name = module.s3_bucket.bucket_name
+  bucket_name = module.s3.bucket_name
 }
