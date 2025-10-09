@@ -1,15 +1,14 @@
-variable "region" {
-  default = "eu-north-1"
-}
-
 variable "bucket_name" {
-  default = "upload-bucket-data-pipeline-8464"
+  description = "S3 bucket name for data pipeline"
+  default     = "upload-bucket-data-pipeline"
 }
 
-variable "lambda_function_name" {
-  default = "mylambdafunction"
+variable "function_name" {
+  description = "Lambda function name"
+  default     = "mylambdafunction"
 }
 
-variable "iam_role_name" {
-  default = "myrole"
+variable "role_name" {
+  description = "IAM role name for Lambda"
+  default     = "myrole"
 }
