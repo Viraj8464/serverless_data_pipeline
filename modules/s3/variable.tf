@@ -1,3 +1,4 @@
 variable "bucket_name" {
-  description = "S3 bucket for pipeline data"
+  description = "S3 bucket name"
+  type        = string
 }
