@@ -1,7 +1,11 @@
+# Terraform
 .terraform/
-terraform.tfstate
-terraform.tfstate.backup
-*.tfvars
-.terraform.lock.hcl
-modules/lambda/*.zip
-*.DS_Store
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+# Local files / packaging
+modules/lambda/src/*.zip
+*.log
+.env
+.vscode/
