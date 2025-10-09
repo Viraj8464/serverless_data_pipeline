@@ -1,4 +1,14 @@
-variable "bucket_name" {}
-variable "lambda_function_name" {}
-variable "iam_role_name" {}
-variable "dynamodb_stream_arn" {}
+variable "function_name" {
+  description = "Lambda function name"
+  type        = string
+}
+
+variable "role_arn" {
+  description = "IAM role ARN for Lambda"
+  type        = string
+}
+
+variable "bucket_name" {
+  description = "S3 bucket used by Lambda"
+  type        = string
+}
