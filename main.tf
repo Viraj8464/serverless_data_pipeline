@@ -55,7 +55,6 @@ module "databrew" {
 module "dynamodb" {
   source = "./modules/dynamodb"
 bucket_name = module.s3.bucket_name
-table_name = "upload-bucket-data-pipeline-table"
 }
 
 # ----------------- Athena -----------------
