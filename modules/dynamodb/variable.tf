@@ -5,4 +5,5 @@ variable "bucket_name" {
 variable "table_name" {
   description = "DynamoDB Table Name"
   type        = string
+default     = "my-dynamodb-table"
 }
