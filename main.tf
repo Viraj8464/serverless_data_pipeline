@@ -53,10 +53,11 @@ module "databrew" {
 
 # ----------------- DynamoDB -----------------
 module "dynamodb" {
-  source = "./modules/dynamodb"
-bucket_name = module.s3.bucket_name
-table_name = var.dynamodb_table_name 
+  source      = "./modules/dynamodb"
+  bucket_name = module.s3.bucket_name
+  table_name  = "my-dynamodb-table"  # 👈 your table name
 }
+
 
 # ----------------- Athena -----------------
 module "athena" {
