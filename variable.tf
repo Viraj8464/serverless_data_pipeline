@@ -17,3 +17,7 @@ variable "table_name" {
   type        = string
   default     = "my-dynamodb-table"
 }
+module "dynamodb" {
+  source     = "./modules/dynamodb"
+  table_name = var.table_name
+}
