@@ -12,3 +12,8 @@ variable "role_name" {
   description = "IAM role name for Lambda"
   default     = "myrole"
 }
+variable "table_name" {
+  description = "The name of the DynamoDB table"
+  type        = string
+  default     = "my-dynamodb-table"
+}
