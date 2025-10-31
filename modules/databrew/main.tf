@@ -13,7 +13,7 @@ provider "aws" {
 
 # Deploy DataBrew resources using CloudFormation
 resource "aws_cloudformation_stack" "databrew_stack" {
-  name          = "databrew-stack"
+  name          = "databrewstack"
   template_body = file("${path.module}/databrew_cf.yaml")
 
 parameters = {
