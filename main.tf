@@ -77,10 +77,10 @@ module "databrew" {
   bucket_name   = "upload-bucket-data-pipeline"
   iam_role_arn  = aws_iam_role.lambda_role.arn
   iam_role_name = var.iam_role_name
-  dataset_name  = "rawdataset"
-  recipe_name   = "cleanrecipe"
-  project_name  = "cleanproject"
-  job_name      = "cleanjob"
+  dataset_name  = "rawdataset2"
+  recipe_name   = "cleanrecipe2"
+  project_name  = "cleanproject2"
+  job_name      = "cleanjob2"
 }
 
 # -----------------------
