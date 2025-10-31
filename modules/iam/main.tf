@@ -1,5 +1,5 @@
 resource "aws_iam_role" "databrew_role" {
-  name = "myrole"
+  name = "newrole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
