@@ -3,7 +3,7 @@ resource "aws_glue_catalog_database" "this" {
 }
 
 resource "aws_glue_catalog_table" "cleaned_table" {
-  name          = "cleaned_table"
+  name          = "pipeline_table"
   database_name = aws_glue_catalog_database.this.name
   table_type    = "EXTERNAL_TABLE"
 
