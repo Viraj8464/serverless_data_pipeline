@@ -45,7 +45,7 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
 # -----------------------
 module "s3_bucket" {
   source              = "./modules/s3"
-  bucket_name         = "upload-bucket-data-pipeline"
+  bucket_name         = "upload-bucket-pipeline-0000"
   lambda_function_arn = module.lambda.lambda_functions["mylambda_arn"]
 }
 # -----------------------
