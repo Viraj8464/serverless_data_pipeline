@@ -1,27 +1,61 @@
-resource "aws_lambda_permission" "allow_s3" {
-  statement_id  = "AllowExecutionFromS3"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.databrew_trigger.function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = var.bucket_arn
+# -----------------------
+# IAM Role for Lambda
+# -----------------------
+resource "aws_iam_role" "lambda_role" {
+  name = "myrole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = [
+            "lambda.amazonaws.com",
+            "glue.amazonaws.com",
+            "databrew.amazonaws.com"
+          ]
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
 }
 
-resource "aws_lambda_function" "this" {
-  function_name = var.function_name
-  role          = var.role_arn
-  handler       = "databrew_trigger.lambda_handler"
+
+
+# -----------------------
+# Lambda Function
+# -----------------------
+resource "aws_lambda_function" "mylambda" {
+  function_name = "mylambdafunction"
+  role          = aws_iam_role.lambda_role.arn
+  handler       = "src.handler.lambda_handler" # Python file and function
   runtime       = "python3.9"
-
-  filename         = "${path.module}/src/databrew_trigger.zip"
-  source_code_hash = filebase64sha256("${path.module}/src/databrew_trigger.zip")
-
-  environment {
-    variables = {
-      BUCKET_NAME = var.bucket_name
-    }
-  }
+  s3_bucket     = var.s3_bucket_name
+  s3_key        = "lambda.zip"
 }
 
-output "function_name" {
-  value = aws_lambda_function.this.function_name
+resource "aws_iam_role_policy" "databrew_s3_access" {
+  name = "databrew-s3-access"
+  role = aws_iam_role.lambda_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket",
+           "s3:DeleteObject"
+        ]
+        Resource = [
+          "arn:aws:s3:::upload-bucket-data-pipeline",
+          "arn:aws:s3:::upload-bucket-data-pipeline/*"
+        ]
+      }
+    ]
+  })
 }
