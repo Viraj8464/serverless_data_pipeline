@@ -17,3 +17,4 @@ variable "bucket_name" {
   description = "S3 bucket used by Lambda"
   type        = string
 }
+
