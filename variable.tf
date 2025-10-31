@@ -12,9 +12,8 @@ variable "role_name" {
   description = "IAM role name for Lambda"
   default     = "myrole"
 }
-variable "dynamodb_table_name" {
-  description = "The name of the DynamoDB table"
+variable "iam_role_name" {
+  description = "IAM role name for AWS DataBrew"
   type        = string
-  default     = "my-dynamodb-table"
 }
 
