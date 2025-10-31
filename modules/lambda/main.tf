@@ -2,7 +2,7 @@
 # IAM Role for Lambda
 # -----------------------
 resource "aws_iam_role" "lambda_role" {
-  name = "myrole"
+  name = "newrole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -28,7 +28,7 @@ resource "aws_iam_role" "lambda_role" {
 # Lambda Function
 # -----------------------
 resource "aws_lambda_function" "mylambda" {
-  function_name = "mylambdafunction"
+  function_name = "newlambdafunction"
   role          = aws_iam_role.lambda_role.arn
   handler       = "src.handler.lambda_handler" # Python file and function
   runtime       = "python3.9"
