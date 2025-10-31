@@ -1,14 +1,9 @@
-output "lambda_function_arn" {
-  value = aws_lambda_function.this.arn
-}
-
-
 output "lambda_functions" {
+  description = "Lambda functions created by this module"
   value = {
-    databrew_trigger        = aws_lambda_function.databrew_trigger.function_name
-    databrew_trigger_arn    = aws_lambda_function.databrew_trigger.arn
-    dynamodb_to_s3          = aws_lambda_function.dynamodb_to_s3.function_name
-    dynamodb_to_s3_arn      = aws_lambda_function.dynamodb_to_s3.arn
+    mylambda_name = aws_lambda_function.mylambda.function_name
+    mylambda_arn  = aws_lambda_function.mylambda.arn
   }
 }
+
 
