@@ -17,4 +17,9 @@ variable "bucket_name" {
   description = "S3 bucket used by Lambda"
   type        = string
 }
+variable "s3_bucket_name" {
+  description = "The name of the S3 bucket containing the Lambda code"
+  type        = string
+}
+
 
