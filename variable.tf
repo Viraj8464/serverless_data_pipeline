@@ -1,19 +1,7 @@
 variable "bucket_name" {
-  description = "S3 bucket name for data pipeline"
-  default     = "upload-bucket-data-pipeline"
+  type = string
 }
 
-variable "function_name" {
-  description = "Lambda function name"
-  default     = "mylambdafunction"
+variable "databrew_job_name" {
+  type = string
 }
-
-variable "role_name" {
-  description = "IAM role name for Lambda"
-  default     = "myrole"
-}
-variable "iam_role_name" {
-  description = "IAM role name for AWS DataBrew"
-  type        = string
-}
-
