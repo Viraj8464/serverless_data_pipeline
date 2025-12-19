@@ -1,3 +1,3 @@
 def lambda_handler(event, context):
-    print("Lambda triggered by S3 event:", event)
-    return {"status": "success"}
+    print("Event received:", event)
+    return {"statusCode": 200, "body": "OK"}
