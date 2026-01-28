@@ -1,3 +1,6 @@
+output "glue_role_arn" {
+  value = aws_iam_role.glue_role.arn
+}
 output "databrew_role_arn" {
   value = aws_iam_role.databrew_role.arn
 }
