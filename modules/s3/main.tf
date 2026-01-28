@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "this" {
-  bucket = var.bucket_name
+  bucket = "upload-bucket-data-pipeline-1234"
 }
 
 resource "aws_lambda_permission" "allow_s3" {
@@ -18,4 +18,7 @@ resource "aws_s3_bucket_notification" "notify" {
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = "data/"
   }
+depends_on = [
+    var.lambda_permission_dep
+  ]
 }
