@@ -1,38 +1,55 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS DataBrew resources
+
+Parameters:
+  BucketName:
+    Type: String
+  RoleArn:
+    Type: String
+  RecipeName:
+    Type: String
+  DatasetName:
+    Type: String
+  ProjectName:
+    Type: String
+  JobName:
+    Type: String
+
 Resources:
-Dataset:
-Type: AWS::DataBrew::Dataset
-Properties:
-Name: sample-dataset
-Input:
-S3InputDefinition:
-Bucket: upload-bucket-data-pipeline
-Key: data/sample.json
 
+  DataBrewDataset:
+    Type: AWS::DataBrew::Dataset
+    Properties:
+      Name: !Ref DatasetName
+      Input:
+        S3InputDefinition:
+          Bucket: !Ref BucketName
+          Key: data/sample.json
 
-Recipe:
-Type: AWS::DataBrew::Recipe
-Properties:
-Name: sample-recipe
-Steps: []
+  DataBrewRecipe:
+    Type: AWS::DataBrew::Recipe
+    Properties:
+      Name: !Ref RecipeName
+      Steps: []
 
+  DataBrewProject:
+    Type: AWS::DataBrew::Project
+    Properties:
+      Name: !Ref ProjectName
+      DatasetName: !Ref DatasetName
+      RecipeName: !Ref RecipeName
+      RoleArn: !Ref RoleArn
 
-Project:
-Type: AWS::DataBrew::Project
-Properties:
-Name: sample-project
-DatasetName: !Ref Dataset
-RecipeName: sample-recipe
-RoleArn: !Ref RoleArn
-
-Job:
-Type: AWS::DataBrew::Job
-Properties:
-Name: sample-job
-Type: RECIPE
-ProjectName: sample-project
-RoleArn: !Ref RoleArn
-Outputs:
-- Location:
-Bucket: upload-bucket-data-pipeline
-Key: cleaned/
+  DataBrewJob:
+    Type: AWS::DataBrew::Job
+    DependsOn: DataBrewProject
+    Properties:
+      Name: !Ref JobName
+      Type: RECIPE
+      RoleArn: !Ref RoleArn
+      ProjectName: !Ref ProjectName
+      Outputs:
+      - Location:
+            Bucket: !Ref BucketName
+            Key: data/output/
+          Format: JSON
