@@ -5,3 +5,6 @@ variable "bucket_name" {
 variable "lambda_arn" {
   type = string
 }
+variable "lambda_permission_dep" {
+  type = any
+}
