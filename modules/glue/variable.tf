@@ -1,3 +1,3 @@
-variable "bucket_name" {
-  type = string
-}
+variable "glue_role_arn" {}
+variable "bucket_name" {}
+
